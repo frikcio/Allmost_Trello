@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block head %}
+    <title>{% translate "HomePage" %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+{% block header %}
+    <h1>{% translate "Almost Trello" %}</h1>
+{% endblock %}
+
+{% block nav %}
+    <a href="{% url 'profile' request.user.pk %}"><button> {{ request.user }} </button></a>
+    <a href="{% url 'logout' %}"><button> {% translate 'LogOut' %} </button></a>
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
