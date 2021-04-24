@@ -16,6 +16,9 @@ class TrelloUser(AbstractUser):
     avatar = models.ImageField(blank=True, null=True)
     birth_date = models.DateField(blank=True, null=True)
 
+    def __str__(self):
+        return self.username
+
     @property
     def age(self):
         return (timezone.now() - self.birth_date).year
@@ -30,14 +33,20 @@ class TaskModel(models.Model):
     text = models.TextField()
     screenshot = models.ImageField(blank=True, null=True)
     owner = models.ForeignKey(TrelloUser, on_delete=models.DO_NOTHING, related_name='created')
-    perfomer = models.ForeignKey(TrelloUser, on_delete=models.DO_NOTHING, related_name='development')
+    perfomer = models.ForeignKey(TrelloUser, on_delete=models.DO_NOTHING, related_name='development',
+                                 blank=True, null=True)
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.title
+
 
 class BoardModel(models.Model):
-    project = models.TextField(max_length=100)
+    project_name = models.CharField(max_length=100, unique=True)
     tasks = models.ManyToManyField(TaskModel, related_name="project_name")
+    users_access_list = models.ManyToManyField(TrelloUser, related_name='projects_access')
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
+

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block head %}
+    <title>{% translate "Create card" %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/create.css' %}">
+{% endblock %}
+
+{% block header %}
+    <h1>{% translate "Almost Trello" %}</h1>
+{% endblock %}
+
+{% block nav %}
+    <a href="{% url 'index' %}">
+    <img class="nav_button" src="{% static 'images/home.png' %}">
+    </a>
+    <a style="text-decoration: none" href="{% url 'profile' request.user.pk %}">
+        <div class="profile nav_button" >
+            <img class="nav_button" src="{% static 'images/profile.png' %}">
+            <span class="user">{{ request.user }}</span>
+        </div>
+    </a>
+
+    <a href="{% url 'logout' %}"><img class="nav_button" src="{% static 'images/logout.png' %}"></a>
+{% endblock %}
+
+{% block aside %}
+{% endblock %}
+
+{% block content %}
+    {% if not request.user.is_superuser %}
+        <div class="form">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" value="create"> create </button>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
