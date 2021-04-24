@@ -12,16 +12,20 @@
 {% endblock %}
 
 {% block nav %}
-    {% translate 'Already have an account?' %}
-    <a href="{% url 'login' %}"><button> {% translate 'login' %} </button></a>
+    {% if not request.user.is_authenticated %}
+        {% translate 'Already have an account?' %}
+        <a href="{% url 'login' %}"><button> {% translate 'login' %} </button></a>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">{% translate 'register' %}</button>
-    </form>
+    {% if not request.user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">{% translate 'register' %}</button>
+        </form>
+    {% endif %}
 {% endblock %}
 
 {% block footer %}

@@ -2,18 +2,28 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+    <link rel = "icon" href =
+"https://denevy.eu/images/career/iconka3.png"
+        type = "image/x-icon">
         {% block head %}
         {% endblock %}
     </head>
     <body class="body">
-        <header class="header">
-            {% block header %}
+        <div class="head">
+            <div></div>
+            <header class="header">
+                {% block header %}
+                {% endblock %}
+            </header>
+            <nav class="nav">
+                {% block nav %}
+                {% endblock %}
+            </nav>
+        </div>
+        <aside class="aside">
+            {% block aside %}
             {% endblock %}
-        </header>
-        <nav class="nav">
-            {% block nav %}
-            {% endblock %}
-        </nav>
+        </aside>
         <article class="content">
             {% block content %}
             {% endblock %}
