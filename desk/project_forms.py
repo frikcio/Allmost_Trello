@@ -35,6 +35,12 @@ class ChangeStatusForm(ModelForm):
         fields = []
 
 
+class ChangeTextForm(ModelForm):
+    class Meta:
+        model = TaskModel
+        fields = ['title', 'text']
+
+
 class ChangePerfomerForm(ModelForm):
     def __init__(self, owner=None, *args, **kwargs):
         super(ChangePerfomerForm, self).__init__(*args, **kwargs)

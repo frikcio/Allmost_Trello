@@ -141,9 +141,18 @@ class ChangePerfomerView(LoginRequiredMixin, UpdateView):
     http_method_names = ['post']
     login_url = '/login/'
     form_class = ChangePerfomerForm
+    success_url = '/'
 
     def get_object(self, queryset=None):
         return TaskModel.objects.get(pk=self.kwargs['pk'])
 
-    def get_success_url(self):
-        return "/"
+
+class ChangeTextView(LoginRequiredMixin, UpdateView):
+    login_url = '/login/'
+    form_class = ChangeTextForm
+    template_name = 'change_text.html'
+    success_url = '/'
+
+    def get_object(self, queryset=None):
+        return TaskModel.objects.get(pk=self.kwargs['pk'])
+

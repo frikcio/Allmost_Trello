@@ -46,6 +46,9 @@
                             {% endif %}
                             <u>{{ card.title }}</u><br>
                             <span class="text">{{ card.text }}</span><br>
+                            {% if request.user.is_superuser or card.owner == request.user %}
+                                <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
+                            {% endif %}
                             perfomer:
                             {% if not card.perfomer %}
                                 {% if card.owner == request.user or request.user.is_superuser %}
@@ -55,7 +58,7 @@
                                         <button type="submit" value="accept">Choose</button>
                                     </form>
                                 {% elif card.owner != request.user %}
-                                    Not selected
+                                    Not selected<br>
                                 {% endif %}
                             {% else %}
                                 {{ card.perfomer.username }}<br>
@@ -93,6 +96,9 @@
                             {% endif %}
                             <u>{{ card.title }}</u><br>
                             <span class="text">{{ card.text }}</span><br>
+                            {% if request.user.is_superuser or card.owner == request.user %}
+                                <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
+                            {% endif %}
                             perfomer: {% if not card.perfomer %}
                                 {% if card.owner == request.user or request.user.is_superuser %}
                                     <form method="post" action="{% url 'change_perfomer' card.pk %}">
@@ -101,7 +107,7 @@
                                         <button type="submit" value="accept">Choose</button>
                                     </form>
                                 {% elif card.owner != request.user %}
-                                    Not selected
+                                    Not selected<br>
                                 {% endif %}
                             {% else %}
                                 {{ card.perfomer.username }}<br>
@@ -138,6 +144,9 @@
                             {% endif %}
                             <u>{{ card.title }}</u><br>
                             <span class="text">{{ card.text }}</span><br>
+                            {% if request.user.is_superuser or card.owner == request.user %}
+                                <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
+                            {% endif %}
                             perfomer: {% if not card.perfomer %}
                                 {% if card.owner == request.user or request.user.is_superuser %}
                                     <form method="post" action="{% url 'change_perfomer' card.pk %}">
@@ -146,7 +155,7 @@
                                         <button type="submit" value="accept">Choose</button>
                                     </form>
                                 {% elif card.owner != request.user %}
-                                    Not selected
+                                    Not selected<br>
                                 {% endif %}
                             {% else %}
                                 {{ card.perfomer.username }}<br>
@@ -187,6 +196,9 @@
                             {% endif %}
                             <u>{{ card.title }}</u><br>
                             <span class="text">{{ card.text }}</span><br>
+                            {% if request.user.is_superuser or card.owner == request.user %}
+                                <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
+                            {% endif %}
                             perfomer: {% if not card.perfomer %}
                                 {% if card.owner == request.user or request.user.is_superuser %}
                                     <form method="post" action="{% url 'change_perfomer' card.pk %}">
@@ -195,7 +207,7 @@
                                         <button type="submit" value="accept">Choose</button>
                                     </form>
                                 {% elif card.owner != request.user %}
-                                    Not selected
+                                    Not selected<br>
                                 {% endif %}
                             {% else %}
                                 {{ card.perfomer.username }}<br>
@@ -237,6 +249,9 @@
                             {% endif %}
                             <u>{{ card.title }}</u><br>
                             <span class="text">{{ card.text }}</span><br>
+                            {% if request.user.is_superuser or card.owner == request.user %}
+                                <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
+                            {% endif %}
                             perfomer: {% if not card.perfomer %}
                                 {% if card.owner == request.user or request.user.is_superuser %}
                                     <form method="post" action="{% url 'change_perfomer' card.pk %}">
@@ -245,7 +260,7 @@
                                         <button type="submit" value="accept">Choose</button>
                                     </form>
                                 {% elif card.owner != request.user %}
-                                    Not selected
+                                    Not selected<br>
                                 {% endif %}
                             {% else %}
                                 {{ card.perfomer.username }}<br>
