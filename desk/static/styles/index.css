@@ -2,7 +2,7 @@ body {
     background-image: url("../images/body.jpg");
 }
 .head {
-    margin: -7px;
+    margin: -8px;
     background-color: #00000052;
     display: flex;
     justify-content: space-between;
