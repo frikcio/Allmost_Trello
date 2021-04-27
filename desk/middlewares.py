@@ -1,12 +1,21 @@
 from django.contrib.auth import logout
 from django.utils import timezone
+import json
+
+from django.utils.dateparse import parse_date, parse_datetime
 from django.utils.deprecation import MiddlewareMixin
+
+from Trello_desk.settings import AUTO_LOGOUT_TIME
 
 
 class AutoLogoutMiddleware(MiddlewareMixin):
     def process_request(self, request):
         if not request.user.is_superuser:
-            request.session['last_action'] = timezone.now()
-            if (timezone.now() - request.session['last_action']).seconds >= 5*2:
-                logout(request)
-        return request
+            try:
+                if (timezone.now() - parse_datetime(request.session['last_action'])).seconds >= AUTO_LOGOUT_TIME*60:
+                    logout(request)
+            except KeyError:
+                pass
+            finally:
+                request.session['last_action'] = str(timezone.now())
+        return self.get_response(request)
