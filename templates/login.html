@@ -8,14 +8,15 @@
 {% endblock %}
 
 {% block header %}
-    <h1>{% translate "Login" %}</h1>
+    <h1>{% translate "Almost Trello" %}</h1>
 {% endblock %}
 
 {% block nav %}
     {% if not request.user.is_authenticated %}
-		<span> {% translate 'Wanna register?' %}
-            <a href="{% url 'register' %}"><button> {% translate 'Sign Up' %} </button></a>
-        </span>
+		<span> {% translate 'Wanna register?' %}</span>
+        <a href="{% url 'register' %}">
+            <img class="nav_button" src="{% static 'images/sign_up.png' %}">
+        </a>
     {% endif %}
 {% endblock %}
 
@@ -24,7 +25,7 @@
 		<form method="post">
 			{% csrf_token %}
 			{{ form.as_p }}
-			<input type="submit" value="Login">
+			<input class="accept" type="submit" value="Login">
 		</form>
 	{% endif %}
 {% endblock %}
