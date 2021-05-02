@@ -1,0 +1,83 @@
+body {
+    background-image: url("../images/body.jpg");
+}
+.head {
+    margin: -8px;
+    background-color: #00000052;
+    display: flex;
+    justify-content: space-between;
+}
+.header{
+    font-family: cursive;
+    text-align: center;
+    color: black;
+}
+
+.nav {
+    padding-right: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.nav_button{
+    height: 40px;
+    width: 40px;
+}
+
+.profile{
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: cursive;
+    font-size: 16px;
+    align-items: center;
+    color: black;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ebecf0;
+    border-radius: 20px;
+    width: 300px;
+    padding-bottom: 15px;
+    margin-left: 37%;
+    margin-top: 30px;
+}
+
+.buttons{
+    display: flex;
+    justify-content: space-around;
+}
+
+.accept{
+    height: 30px;
+    width: 90px;
+    border-radius: 5px;
+    background-color: lightgreen;
+}
+
+.cancel{
+    height: 30px;
+    width: 90px;
+    border-radius: 5px;
+    background-color: indianred;
+}
+
+p{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+p textarea{
+    max-height: 140px;
+    min-height: 140px;
+    max-width: 170px;
+    min-width: 170px;
+}

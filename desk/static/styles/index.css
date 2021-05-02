@@ -1,0 +1,96 @@
+body {
+    background-image: url("../images/body.jpg");
+}
+.head {
+    margin: -8px;
+    background-color: #00000052;
+    display: flex;
+    justify-content: space-between;
+}
+.header{
+    font-family: cursive;
+    text-align: center;
+    color: black;
+}
+
+.nav {
+    padding-right: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.nav_button{
+    height: 40px;
+    width: 40px;
+}
+
+.profile{
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: cursive;
+    font-size: 16px;
+    align-items: center;
+    color: black;
+}
+
+.table {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.task_head {
+    font-family: cursive;
+    text-align: center;
+    padding: 15px;
+    background-color: #ebecf0;
+    border-radius: 10px;
+    width: 17%;
+
+}
+
+.scroll {
+    height: 490px;
+    overflow: auto;
+}
+
+.card {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    padding: 5px;
+    font-family: cursive;
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.text{
+    font-family: Calibri;
+    font-size: 14px;
+}
+
+.date{
+    font-family: cursive;
+    color: darkgrey;
+    font-size: 10px;
+}
+
+.change_status{
+    display: flex;
+    justify-content: space-around;
+}
+
+.arrow {
+    height: 30px;
+    width: 60px;
+}
+
+.delete{
+    height: 20px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: -15px;
+}
