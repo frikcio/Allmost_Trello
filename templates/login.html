@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block head %}
+    <title>{% translate "Login" %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/login.css' %}">
+{% endblock %}
+
+{% block header %}
+    <h1>{% translate "Almost Trello" %}</h1>
+{% endblock %}
+
+{% block nav %}
+    {% if not request.user.is_authenticated %}
+		<span> {% translate 'Wanna register?' %}</span>
+        <a href="{% url 'register' %}">
+            <img class="nav_button" src="{% static 'images/sign_up.png' %}">
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if not request.user.is_authenticated %}
+		<form method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input class="accept" type="submit" value="Login">
+		</form>
+	{% endif %}
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

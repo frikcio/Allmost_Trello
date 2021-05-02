@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block head %}
+    <title>{% translate "Profile" %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/register.css' %}">
+{% endblock %}
+
+{% block header %}
+    <h1>{% translate "Profile" %}</h1>
+    you login as {{ request.user }}
+{% endblock %}
+
+{% block nav %}
+    <a href="{% url 'index' %}"><button> {% translate 'HomePage' %} </button></a>
+    <a href="{% url 'logout' %}"><button> {% translate 'LogOut' %} </button></a>
+{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

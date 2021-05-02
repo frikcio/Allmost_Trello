@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block head %}
+    <title>{% translate "Registration" %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/register.css' %}">
+{% endblock %}
+
+{% block header %}
+    <h1>{% translate "Registration" %}</h1>
+{% endblock %}
+
+{% block nav %}
+    {% if not request.user.is_authenticated %}
+        {% translate 'Already have an account?' %}
+        <a href="{% url 'login' %}"><button> {% translate 'login' %} </button></a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if not request.user.is_authenticated %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">{% translate 'register' %}</button>
+        </form>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
+
+
+{{ task.screenshot.url }}

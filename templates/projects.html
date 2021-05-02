@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block head %}
+    <title>{% translate "Projects" %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/profile.css' %}">
+{% endblock %}
+
+{% block header %}
+    <h1>{% translate "Project list" %}</h1>
+{% endblock %}
+
+{% block nav %}
+    <a href="{% url 'profile' request.user.pk %}"><button> {{ request.user }} </button></a>
+    <a href="{% url 'logout' %}"><button> {% translate 'LogOut' %} </button></a>
+{% endblock %}
+
+{% block aside %}
+{% endblock %}
+
+{% block content %}
+    <h4>{% translate 'Projects list' %}</h4>
+    {% for project in object_list %}
+        {% if request.user in project.users_access_list or request.user.is_superuser %}
+            <a href="{% url 'project' project.project_name %}"><button> {{ project.project_name }} </button></a>
+        {% endif %}
+    {% endfor %}
+    {% include 'projects.html' %}
+    <div class="projects_list">
+        {% if request.user.is_superuser %}
+            <form method="post" action="{% url 'add_project' %}">
+                {% csrf_token %}
+                {{ form.as_p  }}
+                <input type="submit" value="create">
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

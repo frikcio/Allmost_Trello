@@ -1,0 +1,290 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block head %}
+    <title xmlns="http://www.w3.org/1999/html">{% translate "HomePage" %}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/index.css' %}">
+{% endblock %}
+
+{% block header %}
+    <h1>{% translate "Almost Trello" %}</h1>
+{% endblock %}
+
+{% block nav %}
+    {% if not request.user.is_superuser %}
+        <a href="{% url 'create_card' %}">
+        <img class="nav_button" src="{% static 'images/create.png' %}">
+        </a>
+    {% endif %}
+    <a style="text-decoration: none" href="{% url 'profile' request.user.pk %}">
+        <div class="profile nav_button" >
+            <img class="nav_button" src="{% static 'images/profile.png' %}">
+            <span class="user">{{ request.user }}</span>
+        </div>
+    </a>
+
+    <a href="{% url 'logout' %}"><img class="nav_button" src="{% static 'images/logout.png' %}"></a>
+{% endblock %}
+
+{% block aside %}
+{% endblock %}
+
+{% block content %}
+    <div class="table">
+        <div class="task_head">
+            NEW
+            <div class="scroll">
+                {% for card in object_list %}
+                    {% if card.status == 1 %}
+                        <div class="card">
+                            {% if request.user.is_superuser %}
+                                <form class="delete" method="post" action="{% url 'delete' card.pk %}">
+                                    {% csrf_token %}
+                                    <input type="image" src="{% static 'images/cross.png' %}"/>
+                                </form>
+                            {% endif %}
+                            <u>{{ card.title }}</u><br>
+                            <span class="text">{{ card.text }}</span><br>
+                            {% if request.user.is_superuser or card.owner == request.user %}
+                                <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
+                            {% endif %}
+                            performer:
+                            {% if not card.performer %}
+                                {% if card.owner == request.user or request.user.is_superuser %}
+                                    <form method="post" action="{% url 'change_performer' card.pk %}">
+                                        {% csrf_token %}
+                                        {{ performer_form }}<br>
+                                        <button type="submit" value="accept">Choose</button>
+                                    </form>
+                                {% elif card.owner != request.user %}
+                                    Not selected<br>
+                                {% endif %}
+                            {% else %}
+                                {{ card.performer.username }}<br>
+                            {% endif %}
+                            {{ card.modified }}<br>
+                            {% if not request.user.is_superuser and request.user == card.performer %}
+                                <div class="change_status">
+                                    <form method="post" action="{% url "rise" card.pk %}">
+                                        {% csrf_token %}
+                                        <input type="image" class="arrow" src="{% static 'images/right.png' %}"/>
+                                    </form>
+                                </div>
+                            {% endif %}
+                            <span class="date">
+                                owner: {{ card.owner }}<br>
+                                {{ card.created }}
+                            </span> <br>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="task_head">
+            In Progress
+            <div class="scroll">
+                {% for card in object_list %}
+                    {% if card.status == 2 %}
+                        <div class="card">
+                            {% if request.user.is_superuser %}
+                                <form class="delete" method="post" action="{% url 'delete' card.pk %}">
+                                    {% csrf_token %}
+                                    <input type="image" src="{% static 'images/cross.png' %}"/>
+                                </form>
+                            {% endif %}
+                            <u>{{ card.title }}</u><br>
+                            <span class="text">{{ card.text }}</span><br>
+                            {% if request.user.is_superuser or card.owner == request.user %}
+                                <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
+                            {% endif %}
+                            performer: {% if not card.performer %}
+                                {% if card.owner == request.user or request.user.is_superuser %}
+                                    <form method="post" action="{% url 'change_performer' card.pk %}">
+                                        {% csrf_token %}
+                                        {{ performer_form }}<br>
+                                        <button type="submit" value="accept">Choose</button>
+                                    </form>
+                                {% elif card.owner != request.user %}
+                                    Not selected<br>
+                                {% endif %}
+                            {% else %}
+                                {{ card.performer.username }}<br>
+                            {% endif %}
+                            {{ card.modified }}<br>
+                            {% if not request.user.is_superuser and request.user == card.performer %}
+                                <div class="change_status">
+                                    <form method="post" action="{% url "rise" card.pk %}">
+                                        {% csrf_token %}
+                                        <input type="image" class="arrow" src="{% static 'images/right.png' %}"/>
+                                    </form>
+                                </div>
+                            {% endif %}
+                            <span class="date">
+                                owner: {{ card.owner }}<br>
+                                {{ card.created }}</span> <br>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="task_head">
+            In QA
+            <div class="scroll">
+                {% for card in object_list %}
+                    {% if card.status == 3 %}
+                        <div class="card">
+                            {% if request.user.is_superuser %}
+                                <form class="delete" method="post" action="{% url 'delete' card.pk %}">
+                                    {% csrf_token %}
+                                    <input type="image" src="{% static 'images/cross.png' %}"/>
+                                </form>
+                            {% endif %}
+                            <u>{{ card.title }}</u><br>
+                            <span class="text">{{ card.text }}</span><br>
+                            {% if request.user.is_superuser or card.owner == request.user %}
+                                <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
+                            {% endif %}
+                            performer: {% if not card.performer %}
+                                {% if card.owner == request.user or request.user.is_superuser %}
+                                    <form method="post" action="{% url 'change_performer' card.pk %}">
+                                        {% csrf_token %}
+                                        {{ performer_form }}<br>
+                                        <button type="submit" value="accept">Choose</button>
+                                    </form>
+                                {% elif card.owner != request.user %}
+                                    Not selected<br>
+                                {% endif %}
+                            {% else %}
+                                {{ card.performer.username }}<br>
+                            {% endif %}
+                            {{ card.modified }}<br>
+                            {% if not request.user.is_superuser and request.user == card.performer %}
+                                <div class="change_status">
+                                    <form method="post" action="{% url "omit" card.pk %}">
+                                        {% csrf_token %}
+                                        <input type="image" class="arrow" src="{% static 'images/left.png' %}"/>
+                                    </form>
+                                    <form method="post" action="{% url "rise" card.pk %}">
+                                        {% csrf_token %}
+                                        <input type="image" class="arrow" src="{% static 'images/right.png' %}"/>
+                                    </form>
+                                </div>
+                            {% endif %}
+                            <span class="date">
+                                owner: {{ card.owner }}<br>
+                                {{ card.created }}</span> <br>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="task_head">
+            Ready
+            <div class="scroll">
+                {% for card in object_list %}
+                    {% if card.status == 4 %}
+                        <div class="card">
+                            {% if request.user.is_superuser %}
+                                <form class="delete" method="post" action="{% url 'delete' card.pk %}">
+                                    {% csrf_token %}
+                                    <input type="image" src="{% static 'images/cross.png' %}"/>
+                                </form>
+                            {% endif %}
+                            <u>{{ card.title }}</u><br>
+                            <span class="text">{{ card.text }}</span><br>
+                            {% if request.user.is_superuser or card.owner == request.user %}
+                                <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
+                            {% endif %}
+                            performer: {% if not card.performer %}
+                                {% if card.owner == request.user or request.user.is_superuser %}
+                                    <form method="post" action="{% url 'change_performer' card.pk %}">
+                                        {% csrf_token %}
+                                        {{ performer_form }}<br>
+                                        <button type="submit" value="accept">Choose</button>
+                                    </form>
+                                {% elif card.owner != request.user %}
+                                    Not selected<br>
+                                {% endif %}
+                            {% else %}
+                                {{ card.performer.username }}<br>
+                            {% endif %}
+                            {{ card.modified }}<br>
+                            <div class="change_status">
+                                {% if not request.user.is_superuserand and request.user == card.performer %}
+                                    <form method="post" action="{% url "omit" card.pk %}">
+                                        {% csrf_token %}
+                                        <input type="image" class="arrow" src="{% static 'images/left.png' %}"/>
+                                    </form>
+                                {% elif request.user.is_superuser %}
+                                    <form method="post" action="{% url "rise" card.pk %}">
+                                        {% csrf_token %}
+                                        <input type="image" class="arrow" src="{% static 'images/right.png' %}"/>
+                                    </form>
+                                {% endif %}
+                            </div>
+                            <span class="date">
+                                owner: {{ card.owner }}<br>
+                                {{ card.created }}</span> <br>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="task_head">
+            Done
+            <div class="scroll">
+                {% for card in object_list %}
+                    {% if card.status == 5 %}
+                        <div class="card">
+                            {% if request.user.is_superuser %}
+                                <form class="delete" method="post" action="{% url 'delete' card.pk %}">
+                                    {% csrf_token %}
+                                    <input type="image" src="{% static 'images/cross.png' %}"/>
+                                </form>
+                            {% endif %}
+                            <u>{{ card.title }}</u><br>
+                            <span class="text">{{ card.text }}</span><br>
+                            {% if request.user.is_superuser or card.owner == request.user %}
+                                <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
+                            {% endif %}
+                            performer: {% if not card.performer %}
+                                {% if card.owner == request.user or request.user.is_superuser %}
+                                    <form method="post" action="{% url 'change_performer' card.pk %}">
+                                        {% csrf_token %}
+                                        {{ performer_form }}<br>
+                                        <button type="submit" value="accept">Choose</button>
+                                    </form>
+                                {% elif card.owner != request.user %}
+                                    Not selected<br>
+                                {% endif %}
+                            {% else %}
+                                {{ card.performer.username }}<br>
+                            {% endif %}
+                            {{ card.modified }}<br>
+                            {% if request.user.is_superuser %}
+                                <div class="change_status">
+                                    <form method="post" action="{% url "omit" card.pk %}">
+                                        {% csrf_token %}
+                                        <input type="image" class="arrow" src="{% static 'images/left.png' %}"/>
+                                    </form>
+                                </div>
+                            {% endif %}
+                            <span class="date">
+                                owner: {{ card.owner }}<br>
+                                {{ card.created }}</span> <br>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
