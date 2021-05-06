@@ -11,6 +11,7 @@ body {
     font-family: cursive;
     text-align: center;
     color: black;
+    margin-left: 15%;
 }
 
 .nav {
@@ -46,7 +47,7 @@ body {
     font-family: cursive;
     text-align: center;
     padding: 15px;
-    background-color: #ebecf0;
+    background-color: #ebecf099;
     border-radius: 10px;
     width: 17%;
 
