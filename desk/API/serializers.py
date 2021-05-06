@@ -1,5 +1,17 @@
 from rest_framework import serializers
-from desk.models import TaskModel
+from desk.models import TaskModel, TrelloUser
+
+
+class RegisterUserSerializer(serializers.ModelSerializer):
+    re_password = serializers.CharField(max_length=120)
+
+    class Meta:
+        model = TrelloUser
+        fields = ['username', 'password', 're_password']
+
+    def validate(self, attrs):
+        if attrs['password'] == attrs['re_password']:
+            return attrs
 
 
 class CardsListSerializer(serializers.ModelSerializer):
@@ -25,3 +37,8 @@ class CardUpdateSerializer(serializers.ModelSerializer):
         model = TaskModel
         fields = ['text', 'performer']
 
+
+class GetCardsListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TaskModel
+        exclude = ['screenshot', 'created', 'status']

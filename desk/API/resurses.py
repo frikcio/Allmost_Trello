@@ -1,3 +1,4 @@
+from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework.exceptions import APIException
 from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
@@ -19,10 +20,14 @@ class CreateCardAPIView(CreateAPIView):
     serializer_class = CardSerializer
 
     def perform_create(self, serializer):
+        user = self.request.user
         try:
             performer = serializer.validated_data['performer']
-            if not performer or performer == self.request.user:
-                serializer.save(owner=self.request.user)
+            if not performer or performer == user or user.is_superuser:
+                if not performer or not performer.is_superuser:
+                    serializer.save(owner=self.request.user)
+                else:
+                    raise APIException("Admin cannot assign himself as a performer")
             else:
                 raise APIException("You can assign only yourself as a performer")
         except KeyError:
@@ -73,14 +78,32 @@ class UpdateCardAPIView(UpdateAPIView):
 
     def perform_update(self, serializer):
         user = self.request.user
+        obj = serializer.instance
         try:
             performer = serializer.validated_data['performer']
-            if not performer or performer == user or user.is_superuser:
-                if not performer or not performer.is_superuser:
-                    serializer.save()
+            if not obj.performer or user.is_superuser:
+                if not performer or performer == user:
+                    if not performer or not performer.is_superuser:
+                        serializer.save()
+                    else:
+                        raise APIException("Admin cannot assign himself as a performer")
                 else:
-                    raise APIException("Admin cannot assign himself as a performer")
+                    raise APIException("You can assign only yourself as a performer")
             else:
-                raise APIException("You can assign only yourself as a performer")
+                raise APIException("Sorry, but performer have ready selected!")
         except KeyError:
             serializer.save()
+
+
+class GetCardSListAPIView(ListAPIView):
+    authentication_classes = [TemporaryTokenAuth]
+    serializer_class = GetCardsListSerializer
+
+    def get_queryset(self):
+        try:
+            queryset = TaskModel.objects.filter(status=self.request.query_params['status'])
+        except MultiValueDictKeyError:
+            raise APIException("You dont set query params 'status'!!!")
+        except ValueError:
+            raise APIException("You must set in 'status' number from 1 to 5!!!")
+        return queryset
