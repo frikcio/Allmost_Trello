@@ -22,7 +22,10 @@ class NewCardForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.owner = kwargs.pop('owner')
         super(NewCardForm, self).__init__(*args, **kwargs)
-        self.fields['performer'].queryset = TrelloUser.objects.filter(username=self.owner.username)
+        if not self.owner.is_superuser:
+            self.fields['performer'].queryset = TrelloUser.objects.filter(username=self.owner)
+        else:
+            self.fields['performer'].queryset = TrelloUser.objects.exclude(username=self.owner)
 
     class Meta:
         model = TaskModel
@@ -36,14 +39,8 @@ class ChangeStatusForm(ModelForm):
 
 
 class ChangeTextForm(ModelForm):
-    class Meta:
-        model = TaskModel
-        fields = ['title', 'text']
-
-
-class ChangeperformerForm(ModelForm):
     def __init__(self, owner=None, *args, **kwargs):
-        super(ChangeperformerForm, self).__init__(*args, **kwargs)
+        super(ChangeTextForm, self).__init__(*args, **kwargs)
         if owner:
             if not owner.is_superuser:
                 self.fields['performer'].queryset = TrelloUser.objects.filter(username=owner)
@@ -52,6 +49,4 @@ class ChangeperformerForm(ModelForm):
 
     class Meta:
         model = TaskModel
-        fields = ['performer']
-
-
+        fields = ['text', 'performer']

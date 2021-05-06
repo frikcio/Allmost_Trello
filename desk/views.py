@@ -79,12 +79,6 @@ class HomeView(LoginRequiredMixin, ListView):
     login_url = '/login/'
     template_name = 'index.html'
 
-    def get_context_data(self, **kwargs):
-        kwargs = super().get_context_data()
-        form = ChangeperformerForm(self.request.user)
-        kwargs['performer_form'] = form
-        return kwargs
-
 
 class RiseStatusView(LoginRequiredMixin, UpdateView):
     http_method_names = ['post']
@@ -137,21 +131,16 @@ class DeleteCardView(LoginRequiredMixin, DeleteView):
     success_url = "/"
 
 
-class ChangeperformerView(LoginRequiredMixin, UpdateView):
-    http_method_names = ['post']
-    login_url = '/login/'
-    form_class = ChangeperformerForm
-    success_url = '/'
-
-    def get_object(self, queryset=None):
-        return TaskModel.objects.get(pk=self.kwargs['pk'])
-
-
 class ChangeTextView(LoginRequiredMixin, UpdateView):
     login_url = '/login/'
     form_class = ChangeTextForm
     template_name = 'change_text.html'
     success_url = '/'
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['owner'] = self.request.user
+        return kwargs
 
     def get_object(self, queryset=None):
         return TaskModel.objects.get(pk=self.kwargs['pk'])
