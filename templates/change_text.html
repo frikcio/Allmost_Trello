@@ -29,16 +29,26 @@
 {% endblock %}
 
 {% block content %}
-    <div class="form">
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="buttons">
-                <button class="accept" type="submit" value="create"> update </button>
-                <a href="{% url 'index' %}"><button class="cancel" type="button">cancel</button></a>
-            </div>
-        </form>
-    </div>
+    {% if object.owner == request.user or request.user.is_superuser %}
+        <div class="form">
+            <form method="post">
+                <p>Title:</p>
+                <p style= 'background-color: white;
+                           border: solid 1px;
+                           padding-left: 10px;
+                           padding-right: 10px'> {{ object.title }} </p>
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="buttons">
+                    <button class="accept" type="submit" value="create"> update </button>
+                    <a href="{% url 'index' %}"><button class="cancel" type="button">cancel</button></a>
+                </div>
+            </form>
+        </div>
+    {% else %}
+        <div align="center" ><img alt="image" src="{% static 'images/not_acces.jpg' %}"></div>
+
+    {% endif %}
 {% endblock %}
 
 {% block footer %}

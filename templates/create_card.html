@@ -29,19 +29,16 @@
 {% endblock %}
 
 {% block content %}
-    {% if not request.user.is_superuser %}
-        <div class="form">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <div class="buttons">
-                    <button class="accept" type="submit" value="create"> create </button>
-                    <a href="{% url 'index' %}"><button class="cancel" type="button">cancel</button></a>
-                </div>
-
-            </form>
-        </div>
-    {% endif %}
+    <div class="form">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="buttons">
+                <button class="accept" type="submit" value="create"> create </button>
+                <a href="{% url 'index' %}"><button class="cancel" type="button">cancel</button></a>
+            </div>
+        </form>
+    </div>
 {% endblock %}
 
 {% block footer %}

@@ -12,18 +12,15 @@
 {% endblock %}
 
 {% block nav %}
-    {% if not request.user.is_superuser %}
-        <a href="{% url 'create_card' %}">
+    <a href="{% url 'create_card' %}">
         <img class="nav_button" src="{% static 'images/create.png' %}">
-        </a>
-    {% endif %}
+    </a>
     <a style="text-decoration: none" href="{% url 'profile' request.user.pk %}">
         <div class="profile nav_button" >
             <img class="nav_button" src="{% static 'images/profile.png' %}">
             <span class="user">{{ request.user }}</span>
         </div>
     </a>
-
     <a href="{% url 'logout' %}"><img class="nav_button" src="{% static 'images/logout.png' %}"></a>
 {% endblock %}
 
@@ -51,15 +48,7 @@
                             {% endif %}
                             performer:
                             {% if not card.performer %}
-                                {% if card.owner == request.user or request.user.is_superuser %}
-                                    <form method="post" action="{% url 'change_performer' card.pk %}">
-                                        {% csrf_token %}
-                                        {{ performer_form }}<br>
-                                        <button type="submit" value="accept">Choose</button>
-                                    </form>
-                                {% elif card.owner != request.user %}
-                                    Not selected<br>
-                                {% endif %}
+                                <b><u>Not selected</u></b><br>
                             {% else %}
                                 {{ card.performer.username }}<br>
                             {% endif %}
@@ -99,16 +88,9 @@
                             {% if request.user.is_superuser or card.owner == request.user %}
                                 <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
                             {% endif %}
-                            performer: {% if not card.performer %}
-                                {% if card.owner == request.user or request.user.is_superuser %}
-                                    <form method="post" action="{% url 'change_performer' card.pk %}">
-                                        {% csrf_token %}
-                                        {{ performer_form }}<br>
-                                        <button type="submit" value="accept">Choose</button>
-                                    </form>
-                                {% elif card.owner != request.user %}
-                                    Not selected<br>
-                                {% endif %}
+                            performer:
+                            {% if not card.performer %}
+                                <b><u>Not selected</u></b><br>
                             {% else %}
                                 {{ card.performer.username }}<br>
                             {% endif %}
@@ -147,16 +129,9 @@
                             {% if request.user.is_superuser or card.owner == request.user %}
                                 <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
                             {% endif %}
-                            performer: {% if not card.performer %}
-                                {% if card.owner == request.user or request.user.is_superuser %}
-                                    <form method="post" action="{% url 'change_performer' card.pk %}">
-                                        {% csrf_token %}
-                                        {{ performer_form }}<br>
-                                        <button type="submit" value="accept">Choose</button>
-                                    </form>
-                                {% elif card.owner != request.user %}
-                                    Not selected<br>
-                                {% endif %}
+                            performer:
+                            {% if not card.performer %}
+                                <b><u>Not selected</u></b><br>
                             {% else %}
                                 {{ card.performer.username }}<br>
                             {% endif %}
@@ -199,16 +174,9 @@
                             {% if request.user.is_superuser or card.owner == request.user %}
                                 <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
                             {% endif %}
-                            performer: {% if not card.performer %}
-                                {% if card.owner == request.user or request.user.is_superuser %}
-                                    <form method="post" action="{% url 'change_performer' card.pk %}">
-                                        {% csrf_token %}
-                                        {{ performer_form }}<br>
-                                        <button type="submit" value="accept">Choose</button>
-                                    </form>
-                                {% elif card.owner != request.user %}
-                                    Not selected<br>
-                                {% endif %}
+                            performer:
+                            {% if not card.performer %}
+                                <b><u>Not selected</u></b><br>
                             {% else %}
                                 {{ card.performer.username }}<br>
                             {% endif %}
@@ -252,16 +220,9 @@
                             {% if request.user.is_superuser or card.owner == request.user %}
                                 <a href="{% url 'change_text' card.pk %}"><button>Change text</button></a><br>
                             {% endif %}
-                            performer: {% if not card.performer %}
-                                {% if card.owner == request.user or request.user.is_superuser %}
-                                    <form method="post" action="{% url 'change_performer' card.pk %}">
-                                        {% csrf_token %}
-                                        {{ performer_form }}<br>
-                                        <button type="submit" value="accept">Choose</button>
-                                    </form>
-                                {% elif card.owner != request.user %}
-                                    Not selected<br>
-                                {% endif %}
+                            performer:
+                            {% if not card.performer %}
+                                <b><u>Not selected</u></b><br>
                             {% else %}
                                 {{ card.performer.username }}<br>
                             {% endif %}
