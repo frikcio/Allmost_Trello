@@ -34,7 +34,7 @@ class TaskModel(models.Model):
     text = models.TextField()
     screenshot = models.ImageField(blank=True, null=True)
     owner = models.ForeignKey(TrelloUser, on_delete=models.DO_NOTHING, related_name='created')
-    performer = models.ForeignKey(TrelloUser, on_delete=models.DO_NOTHING, related_name='development', default=None,
+    performer = models.ForeignKey(TrelloUser, on_delete=models.DO_NOTHING, related_name='development', blank=True,
                                   null=True)
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
     created = models.DateTimeField(auto_now_add=True)
