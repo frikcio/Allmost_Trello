@@ -30,27 +30,36 @@
 
 {% block content %}
     {% if object.owner == request.user or request.user.is_superuser %}
-        <div class="form">
             <form method="post">
-                <p>Title:</p>
-                <p style= 'background-color: white;
-                           border: solid 1px;
-                           padding-left: 10px;
-                           padding-right: 10px'> {{ object.title }} </p>
-                {% csrf_token %}
-                {{ form.as_p }}
-                <div class="buttons">
-                    <button class="accept" type="submit" value="create"> update </button>
-                    <a href="{% url 'index' %}"><button class="cancel" type="button">cancel</button></a>
+                <div class="form">
+                    <p>Title:</p>
+                    <p style= 'background-color: white;
+                               border: solid 1px;
+                               padding-left: 10px;
+                               padding-right: 10px'> {{ object.title }} </p>
+                    {% csrf_token %}
+                    <p>Text:</p>
+                    {{ form.text }}
+                    {% if not object.performer or object.performer == request.user or request.user.is_superuser %}
+                        <p>Performer:</p>
+                        <p>{{ form.performer }}</p>
+                    {% else %}
+                        <p>Performer:</p>
+                        <p style= 'background-color: white;
+                               border: solid 1px;
+                               padding-left: 10px;
+                               padding-right: 10px'> {{ object.performer }} </p>
+                    {% endif %}
+                    <div class="buttons">
+                        <button class="accept" type="submit" value="create"> update </button>
+                        <a href="{% url 'index' %}"><button class="cancel" type="button">cancel</button></a>
+                    </div>
                 </div>
             </form>
-        </div>
     {% else %}
         <div align="center" ><img alt="image" src="{% static 'images/not_acces.jpg' %}"></div>
-
     {% endif %}
 {% endblock %}
 
 {% block footer %}
-
 {% endblock %}

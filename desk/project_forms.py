@@ -18,10 +18,10 @@ class NewProjectForm(ModelForm):
         fields = ['project_name', 'users_access_list']
 
 
-class NewCardForm(ModelForm):
+class CreateCardForm(ModelForm):
     def __init__(self, *args, **kwargs):
         self.owner = kwargs.pop('owner')
-        super(NewCardForm, self).__init__(*args, **kwargs)
+        super(CreateCardForm, self).__init__(*args, **kwargs)
         if not self.owner.is_superuser:
             self.fields['performer'].queryset = TrelloUser.objects.filter(username=self.owner)
         else:

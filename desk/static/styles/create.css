@@ -37,6 +37,11 @@ body {
     color: black;
 }
 
+.content {
+    display: flex;
+    justify-content: center;
+}
+
 .form{
     display: flex;
     flex-direction: column;
@@ -45,7 +50,6 @@ body {
     border-radius: 20px;
     width: 300px;
     padding-bottom: 15px;
-    margin-left: 37%;
     margin-top: 30px;
 }
 
@@ -75,11 +79,17 @@ p{
     align-items: center;
     margin-top: 5px;
     margin-bottom: 5px;
+    border-radius: 4px;
 }
 
-p textarea{
+textarea{
     max-height: 140px;
     min-height: 140px;
     max-width: 170px;
     min-width: 170px;
+    border-radius: 5px;
+}
+
+select {
+    border-radius: 4px;
 }

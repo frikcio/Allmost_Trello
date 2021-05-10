@@ -13,7 +13,7 @@ urlpatterns = [
     path('profile/<int:pk>/', ProfileView.as_view(), name='profile'),
     path('card/create/', CreateCardView.as_view(), name='create_card'),
     path('card/change/text/<int:pk>/', ChangeTextView.as_view(), name='change_text'),
-    path('card/status/rise/<int:pk>/', RiseStatusView.as_view(), name='rise'),
+    path('card/status/raise/<int:pk>/', RaiseStatusView.as_view(), name='rise'),
     path('card/status/omit/<int:pk>/', OmitStatusView.as_view(), name='omit'),
     path('card/delete/<int:pk>/', DeleteCardView.as_view(), name='delete'),
 ]

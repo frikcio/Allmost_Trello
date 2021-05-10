@@ -45,7 +45,7 @@ class TaskModel(models.Model):
 
 
 class BoardModel(models.Model):
-    project_name = models.CharField(max_length=100, unique=True)
+    project_name = models.CharField(max_length=100, unique=True, blank=False, null=False)
     tasks = models.ManyToManyField(TaskModel, related_name="project_name")
     users_access_list = models.ManyToManyField(TrelloUser, related_name='projects_access')
     created = models.DateTimeField(auto_now_add=True)
