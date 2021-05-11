@@ -4,17 +4,23 @@
 {% block head %}
     <title>{% translate "Profile" %}</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/register.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/profile.css' %}">
 {% endblock %}
 
 {% block header %}
-    <h1>{% translate "Profile" %}</h1>
-    you login as {{ request.user }}
+    <h1>{% translate "Almost Trello" %}</h1>
 {% endblock %}
 
 {% block nav %}
-    <a href="{% url 'index' %}"><button> {% translate 'HomePage' %} </button></a>
-    <a href="{% url 'logout' %}"><button> {% translate 'LogOut' %} </button></a>
+    <div>
+        <a href="{% url 'index' %}">
+            <img class="nav_button" style="padding-right: 10px" src="{% static 'images/home.png' %}">
+        </a>
+        <a href="{% url 'logout' %}"><img class="nav_button" src="{% static 'images/logout.png' %}"></a>
+    </div>
+    <div>
+        Hello <u>{{ request.user }}</u>
+    </div>
 {% endblock %}
 
 {% block content %}

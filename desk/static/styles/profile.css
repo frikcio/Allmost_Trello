@@ -1,0 +1,33 @@
+body {
+    background-image: url("../images/body.jpg");
+}
+.head {
+    margin: -8px;
+    background-color: #00000052;
+    display: flex;
+    justify-content: space-between;
+}
+.header{
+    font-family: cursive;
+    text-align: center;
+    color: black;
+    margin-left: 7%;
+}
+
+.nav {
+    padding-right: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav_button{
+    height: 40px;
+    width: 40px;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+}
