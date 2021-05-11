@@ -25,7 +25,7 @@ class CreateCardForm(ModelForm):
         if not self.owner.is_superuser:
             self.fields['performer'].queryset = TrelloUser.objects.filter(username=self.owner)
         else:
-            self.fields['performer'].queryset = TrelloUser.objects.exclude(username=self.owner)
+            self.fields['performer'].queryset = TrelloUser.objects.filter(is_superuser=False)
 
     class Meta:
         model = TaskModel
@@ -45,7 +45,7 @@ class ChangeTextForm(ModelForm):
             if not owner.is_superuser:
                 self.fields['performer'].queryset = TrelloUser.objects.filter(username=owner)
             else:
-                self.fields['performer'].queryset = TrelloUser.objects.exclude(username=owner)
+                self.fields['performer'].queryset = TrelloUser.objects.filter(is_superuser=False)
 
     class Meta:
         model = TaskModel

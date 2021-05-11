@@ -63,9 +63,10 @@ class CreateCardView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         card = form.save(commit=False)
-        card.owner = self.request.user
-        card.save()
-        return HttpResponseRedirect(self.get_success_url())
+        if not card.performer or card.performer == self.request.user or self.request.user.is_superuser:
+            card.owner = self.request.user
+            card.save()
+            return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
         return "/"
@@ -82,18 +83,16 @@ class RaiseStatusView(LoginRequiredMixin, UpdateView):
     login_url = "/login/"
     form_class = ChangeStatusForm
     queryset = TaskModel.objects.all()
-    permission_denied_message = "You're unworthy!"
 
     def form_valid(self, form):
         card = form.save(commit=False)
-        if self.request.user.is_authenticated or self.request.user == card.performer:
-            if not self.request.user.is_superuser:
-                if card.status < 4:
-                    card.status += 1
-            else:
-                if 3 < card.status < 5:
-                    card.status += 1
-            card.save()
+        if self.request.user == card.performer:
+            if card.status < 4:
+                card.status += 1
+        elif self.request.user.is_superuser:
+            if 3 < card.status < 5:
+                card.status += 1
+        card.save()
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
@@ -108,14 +107,13 @@ class OmitStatusView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         card = form.save(commit=False)
-        if self.request.user.is_authenticated or self.request.user == card.performer:
-            if not self.request.user.is_superuser:
-                if 4 >= card.status > 2:
-                    card.status -= 1
-            else:
-                if card.status > 3:
-                    card.status -= 1
-            card.save()
+        if self.request.user == card.performer:
+            if 4 >= card.status > 2:
+                card.status -= 1
+        elif self.request.user.is_superuser:
+            if card.status > 4:
+                card.status -= 1
+        card.save()
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
@@ -132,19 +130,20 @@ class ChangeTextView(LoginRequiredMixin, UpdateView):
     form_class = ChangeTextForm
     template_name = 'change_text.html'
     success_url = '/'
+    queryset = TaskModel.objects.all()
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['owner'] = self.request.user
         return kwargs
 
-    def get_object(self, queryset=None):
-        return TaskModel.objects.get(pk=self.kwargs['pk'])
-
     def form_valid(self, form):
         card = self.get_object()
-        if (not self.object.performer and card.performer != card.owner) and not self.request.user.is_superuser:
-            card = form.save(commit=False)
-            card.performer = self.get_object().performer
-            card.save()
-        return super().form_valid(form=form)
+        if self.request.user != card.owner or not self.request.user.is_superuser:
+            HttpResponseRedirect('/')
+        else:
+            if (not self.object.performer and card.performer != card.owner) and not self.request.user.is_superuser:
+                card = form.save(commit=False)
+                card.performer = self.get_object().performer
+                card.save()
+            return super().form_valid(form=form)
